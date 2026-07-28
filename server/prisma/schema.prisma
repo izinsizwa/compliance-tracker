@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RequirementType {
+  CIPC_ANNUAL_RETURN
+  BEE_CERTIFICATE
+  UIF_DECLARATION
+  COIDA_RETURN
+  POPIA_REVIEW
+  OTHER
+}
+
+enum RecurrenceUnit {
+  MONTHLY
+  YEARLY
+  ONCE
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime   @default(now())
+  businesses   Business[]
+}
+
+model Business {
+  id           String        @id @default(uuid())
+  name         String
+  registration String?
+  contactEmail String?
+  contactPhone String?
+  ownerId      String
+  owner        User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  requirements Requirement[]
+  createdAt    DateTime      @default(now())
+}
+
+model Requirement {
+  id               String         @id @default(uuid())
+  businessId       String
+  business         Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  type             RequirementType
+  label            String
+  dueDate          DateTime
+  recurrenceUnit   RecurrenceUnit @default(YEARLY)
+  recurrenceEvery  Int            @default(1)
+  completedAt      DateTime?
+  nudges           Nudge[]
+  createdAt        DateTime       @default(now())
+}
+
+enum NudgeChannel {
+  EMAIL
+  WHATSAPP
+}
+
+model Nudge {
+  id            String       @id @default(uuid())
+  requirementId String
+  requirement   Requirement  @relation(fields: [requirementId], references: [id], onDelete: Cascade)
+  channel       NudgeChannel
+  sentAt        DateTime     @default(now())
+  note          String?
+}

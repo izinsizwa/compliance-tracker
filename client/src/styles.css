@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap");
+
+:root {
+  --ink: #1c231f;
+  --paper: #f6f4ee;
+  --paper-raised: #ffffff;
+  --line: #dcd7c9;
+  --line-strong: #b9b3a0;
+  --muted: #6b6b5f;
+
+  --forest: #1f4d3a;
+  --forest-tint: #e3ece5;
+  --rust: #9a3324;
+  --rust-tint: #f6e4df;
+  --amber: #8a5a1c;
+  --amber-tint: #f3e6d0;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --radius: 3px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; }
+
+button, input, select {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+input, select {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 9px 11px;
+  color: var(--ink);
+}
+
+input:focus, select:focus, button:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 1px;
+}
+
+button {
+  cursor: pointer;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-strong);
+  background: var(--paper-raised);
+  padding: 9px 14px;
+  color: var(--ink);
+  transition: background-color 120ms ease;
+}
+
+button:hover { background: #efece3; }
+
+button.primary {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #f6f4ee;
+}
+
+button.primary:hover { background: #17392b; }
+
+button.danger-ghost {
+  border-color: var(--rust);
+  color: var(--rust);
+}
+
+a { color: var(--forest); }
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+/* The signature element: a rubber-stamp style status mark, evoking the
+   physical stamps used on filed South African compliance paperwork. */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px 3px 8px;
+  border-radius: 2px;
+  border: 1.5px solid currentColor;
+  transform: rotate(-1.2deg);
+  white-space: nowrap;
+}
+
+.stamp.overdue { color: var(--rust); background: var(--rust-tint); }
+.stamp.due_soon { color: var(--amber); background: var(--amber-tint); }
+.stamp.on_track { color: var(--forest); background: var(--forest-tint); }
+.stamp.completed { color: var(--muted); background: #ece9df; transform: rotate(0deg); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
